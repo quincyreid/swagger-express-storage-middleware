@@ -24,5 +24,23 @@
     "babel": "^5.0.12",
     "mocha": "^2.2.4",
     "rimraf": "^2.3.2"
-  }
+  },
+  "author": "attn:",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/attn/swagger-express-storage-middleware.git"
+  },
+  "bugs": {
+    "url": "https://github.com/attn/swagger-express-storage-middleware/issues"
+  },
+  "homepage": "https://github.com/attn/swagger-express-storage-middleware",
+  "keywords": [
+    "datastore",
+    "express",
+    "middleware",
+    "orm",
+    "storage",
+    "swagger",
+    "waterline"
+  ]
 }
