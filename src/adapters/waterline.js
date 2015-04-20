@@ -26,6 +26,7 @@ export default class WaterlineAdapter extends Storage {
 
   initialize(resources, callback) {
 
+    // @todo Allow configuration for skipping resources.
     for (let resource in resources) {
 
       let schema = {};
@@ -35,8 +36,25 @@ export default class WaterlineAdapter extends Storage {
 
       schema.identity = resource.toLowerCase();
 
-      // @todo This should be customisable.
-      schema.connection = 'default';
+      debugger;
+
+      // Allow for explicitly setting the connection per resource.
+      // @todo Allow setting the connection per operation as well.
+      if (resources[resource]['x-waterline-connection']) {
+        schema.connection = resources[resource]['x-waterline-connection'];
+      } else {
+        [
+          resource,
+          schema.identity,
+          _.chain(resource).camelCase().capitalize().value() + 'Service',
+          'default'
+        ].some((option) => {
+          // 'some' works like 'forEach', but with a 'break'.
+          if (this.config.connections[option]) {
+            return schema.connection = option;
+          }
+        });
+      }
 
       // Load the resource into Waterline.
       this.engine.loadCollection(Waterline.Collection.extend(schema));
@@ -63,6 +81,7 @@ export default class WaterlineAdapter extends Storage {
 
   find(model, query, callback) {
     debug('Finding %s', model);
+    // @todo Pass second options parameter to find()? Or allow pre-/post- connection config?
     this.getModel(model).find(query).exec(function(error, resources) {
       return callback(error, resources);
     });
