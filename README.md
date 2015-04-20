@@ -69,3 +69,24 @@ swagger(spec, app, function(err, middleware, api, metadata) {
 
 });
 ```
+
+```javascript
+// storage/disk-adapter.js
+var path = require('path');
+
+module.exports = {
+  adapters: {
+    default: require('sails-disk')
+  },
+  connections: {
+    default: {
+      adapter: 'default',
+      filePath: path.join(__dirname, 'tmp/')
+    }
+  },
+  defaults: {
+    migrate: 'safe'
+  }
+};
+
+```
