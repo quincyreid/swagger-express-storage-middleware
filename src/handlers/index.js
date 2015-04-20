@@ -11,6 +11,8 @@ export default function(storage) {
   return function handler(req, res, next) {
     if (req.swagger) {
       res.swagger = res.swagger || {};
+      // Try to figure out what resource is being requested.
+      determineRequestResource(req);
       let handler = determineRequestType(req) === 'resource' ? resourceHandler : collectionHandler;
       return handler(storage)(req, res, next);
     }
@@ -35,4 +37,18 @@ function determineRequestType(req) {
     isResource = true;
   }
   return req.swagger.requestType = (isResource ? 'resource' : req.swagger.requestType = 'collection');
+}
+
+/**
+ * Determine the resource being requested.
+ *
+ * @param {Object} req
+ * @return {String} resourceType
+ */
+function determineRequestResource(req) {
+  let resourceType = req.swagger.operation['x-resource'] || req.swagger.path['x-resource'];
+  if (resourceType) {
+    req.swagger.resourceType = resourceType;
+  }
+  return req.swagger.resourceType;
 }
