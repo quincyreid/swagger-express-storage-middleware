@@ -9,7 +9,7 @@ import collectionHandler from './collection';
 
 export default function(storage) {
   return function handler(req, res, next) {
-    if (req.swagger) {
+    if (req.swagger && req.swagger.operation) {
       res.swagger = res.swagger || {};
       // Try to figure out what resource is being requested.
       determineRequestResource(req);
