@@ -36,8 +36,6 @@ export default class WaterlineAdapter extends Storage {
 
       schema.identity = resource.toLowerCase();
 
-      debugger;
-
       // Allow for explicitly setting the connection per resource.
       // @todo Allow setting the connection per operation as well.
       if (resources[resource]['x-waterline-connection']) {
