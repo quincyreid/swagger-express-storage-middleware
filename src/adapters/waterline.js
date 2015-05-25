@@ -31,7 +31,9 @@ export default class WaterlineAdapter extends Storage {
 
       let schema = {};
 
-      schema.attributes = _.pick(resources[resource].properties, ['type', 'enum']);
+      schema.attributes = {};
+      // @todo Load schema attributes properly.
+      // schema.attributes = _.pick(resources[resource].properties, ['type', 'enum']);
       // schema.attributes = _.clone(resources[resource].properties, true);
 
       schema.identity = resource.toLowerCase();
