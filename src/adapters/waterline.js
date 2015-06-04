@@ -80,7 +80,7 @@ export default class WaterlineAdapter extends Storage {
   find(model, query, callback) {
     debug('Finding %s', model);
     // @todo Pass second options parameter to find()? Or allow pre-/post- connection config?
-    this.getModel(model).find(query).exec(function(error, resources) {
+    this.getModel(model).find().exec(function(error, resources) {
       return callback(error, resources);
     });
   }
